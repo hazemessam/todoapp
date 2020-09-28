@@ -54,25 +54,39 @@ def create_todo():
         }
     except Exception as e:
         err = True
-        print(f'Error: {e}')
         db.session.rollback()
+        print(f'Error: {e}')
     finally:
         db.session.close()
+
     if err:
         return abort(500)
     else:
-        return json.dumps(body)
+        return jsonify(body)
 
 @app.route('/todos/update/status', methods=['POST'])
 def method_name():
-    id = json.loads(request.data).get('id')
-    todo = Todo.query.get(id)
-    todo.completed = not todo.completed
-    db.session.commit()
-    return jsonify({
-        'id': todo.id,
-        'updated': True
-    })
+    err, body = None, None
+    try:
+        id = json.loads(request.data).get('id')
+        todo = Todo.query.get(id)
+        todo.completed = not todo.completed
+        db.session.commit()
+        body = {
+            'id': todo.id,
+            'updated': True
+        }
+    except Exception as e:
+        err = True
+        db.session.rollback()
+        print(e)
+    finally:
+        db.session.close()
+
+    if err:
+        return abort(500)
+    else:
+        return jsonify(body)
 
 
 if __name__ == '__main__':
