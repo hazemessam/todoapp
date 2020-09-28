@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>To-Do</title>
+        <script defer src="/static/js/main.js"></script>
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/fontello.css">
+        <link rel="icon" href="/static/img/icon.png">
+    </head>
+    <body>
+        <div class="app">
+
+            <h2>
+                <i class="icon-logo"></i>  
+                To-Do App
+            </h2>
+            <hr>
+            
+            <main>
+                <div class="left-panel">
+                    <!-- Lists -->
+                    <ul class="lists">
+                        {% for list in data.lists %}
+                        <li class="list {{ 'selected' if list.selected else ''}}">{{ list.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="border"></div>
+                <div class="right-panel">
+                    <!-- Create a todo -->
+                    <form class="create-form">
+                        <input type="text" name="description" placeholder="New Task" autocomplete="off">
+                        <input type="submit" value="Create">
+                    </form>
+                    <hr>
+
+                    <!-- todos -->
+                    <ul class="todos">
+                        {% for todo in data.todos %}
+                        <li class="todo {{ 'completed' if todo.completed }}" id="{{ todo.id }}"> 
+                            <i class="check {{ 'icon-check-2' if todo.completed else 'icon-check-1' }}"></i>
+                            <span class="description">{{ todo.description }}</span> 
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

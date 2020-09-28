@@ -1,0 +1,133 @@
+:root {--main-color: #1398F9;}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom right, #03E6F7, #0030FB);
+}
+
+.app {
+    width: 60%;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,0.5);
+    color: #777;
+}
+
+.app h2 {
+    color: var(--main-color);
+    font-size: 24pt;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+h2 .icon-logo::before {margin: 0;}
+
+hr {margin: 20px 0;}
+
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+.border {
+    border-right: 1px solid #aaa;
+    margin: 0 20px;
+}
+
+.left-panel {flex: 1;}
+
+.left-panel .lists {
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+}
+
+.left-panel .lists .list{
+    font-size: 14pt;
+    margin-bottom: 10px;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.left-panel .lists .list.selected, 
+.left-panel .lists .list:hover {
+    color: var(--main-color);
+}
+
+.right-panel {flex: 4;}
+
+form {display: flex;}
+
+input {
+    width: 100%;
+    border: 2px solid var(--main-color);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12pt;
+    outline: none;
+}
+
+input[type="submit"] {
+    width: 72px;
+    margin-left: 15px;
+    background-color: #4CAF50;
+    border: 2px solid #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    transition: .3s;
+}
+
+input[type="submit"]:hover {
+    background-color: transparent;
+    color: #4CAF50;
+}
+
+.todos {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    height: 340px;
+    background: #efefefa1;
+    border-radius: 8px;
+    overflow-y: auto;
+}
+
+.todos::-webkit-scrollbar {
+    width: 2px;
+}
+
+.todos::-webkit-scrollbar-track {
+    background: #fff;
+    overflow: hidden;
+}
+
+.todos::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 10px;
+}
+
+.todo {
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px #999;
+    user-select: none;
+}
+
+.todo .check {
+    cursor: pointer;
+}
+
+.todo.completed .check {
+    color: #4CAF50;
+}
+.todo.completed .description {
+    text-decoration: line-through;
+}
