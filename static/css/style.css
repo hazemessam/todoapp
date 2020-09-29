@@ -119,10 +119,19 @@ input[type="submit"]:hover {
     background-color: #fff;
     box-shadow: 0 1px 3px #999;
     user-select: none;
+    transition: all .3s;
+}
+
+.todo:hover {
+    box-shadow: 0 1px 10px #aaa;
 }
 
 .todo .checkbox {
     cursor: pointer;
+}
+
+.todo.completed {
+    box-shadow: 0 1px 3px #4CAF50;
 }
 
 .todo.completed .checkbox {
