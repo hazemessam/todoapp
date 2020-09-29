@@ -1,7 +1,6 @@
 // Global Variables
 const createForm = document.querySelector('.create-form');
 const todosList = document.querySelector('.todos');
-const todoChecks = document.querySelectorAll('.todo .check');
 
 
 // Event Handlers
@@ -13,7 +12,7 @@ const createTodoHandler = (e) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            description: document.querySelector('input[name="description"]').value
+            description: createForm.querySelector('input[name="description"]').value
         })
     }
     return fetch('http://127.0.0.1:5000/todos/create', options)
@@ -24,39 +23,31 @@ const createTodoHandler = (e) => {
             todoLi.className = 'todo';
             todoLi.id = data.id;
             todoLi.innerHTML = `
-                <i class="check icon-check-1"></i>
+                <i class="checkbox icon-check-1"></i>
                 <span class="description">${data.description}</span>
             `
-            document.querySelector('.todos').appendChild(todoLi);
-            document.querySelector('input[name="description"]').value = '';
+            todosList.appendChild(todoLi);
+            createForm.querySelector('input[name="description"]').value = '';
         })
         .catch(err => console.log(err));
 }
 
 const updateTodoStatusHandler = (e) => {
     const todo = e.target.parentElement;
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: todo.id, 
-        })
-    }
-    return fetch('http://127.0.0.1:5000/todos/update/status', options)
+    const options = {method: 'POST'};
+    return fetch(`http://127.0.0.1:5000/todos/${todo.id}/update/status`, options)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
                 if (data.updated) {
                     todo.classList.toggle('completed');
-                    const checkElm = todo.querySelector('.check');
-                    if (checkElm.classList.contains('icon-check-1')) {
-                        checkElm.classList.remove('icon-check-1');
-                        checkElm.classList.add('icon-check-2');
+                    const checkboxElm = todo.querySelector('.checkbox');
+                    if (checkboxElm.classList.contains('icon-check-1')) {
+                        checkboxElm.classList.remove('icon-check-1');
+                        checkboxElm.classList.add('icon-check-2');
                     } else {
-                        checkElm.classList.remove('icon-check-2');
-                        checkElm.classList.add('icon-check-1');
+                        checkboxElm.classList.remove('icon-check-2');
+                        checkboxElm.classList.add('icon-check-1');
                     }
                 } else {
                     console.log(`todo wasn't updated!`)
@@ -66,7 +57,7 @@ const updateTodoStatusHandler = (e) => {
 }
 
 const updateTodoHandler = (e) => {
-    if (e.target.classList.contains('check'))
+    if (e.target.classList.contains('checkbox'))
         updateTodoStatusHandler(e);
 }
 

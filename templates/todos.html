@@ -40,7 +40,7 @@
                     <ul class="todos">
                         {% for todo in data.todos %}
                         <li class="todo {{ 'completed' if todo.completed }}" id="{{ todo.id }}"> 
-                            <i class="check {{ 'icon-check-2' if todo.completed else 'icon-check-1' }}"></i>
+                            <i class="checkbox {{ 'icon-check-2' if todo.completed else 'icon-check-1' }}"></i>
                             <span class="description">{{ todo.description }}</span> 
                         </li>
                         {% endfor %}

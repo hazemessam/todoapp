@@ -121,11 +121,11 @@ input[type="submit"]:hover {
     user-select: none;
 }
 
-.todo .check {
+.todo .checkbox {
     cursor: pointer;
 }
 
-.todo.completed .check {
+.todo.completed .checkbox {
     color: #4CAF50;
 }
 .todo.completed .description {

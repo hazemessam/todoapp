@@ -34,11 +34,13 @@ lists = [
 def index():
     return redirect('/todos')
 
+# Read all todos
 @app.route('/todos')
 def get_todos():
     todos = Todo.query.order_by(Todo.id).all()
     return render_template('todos.html', data={'todos': todos, 'lists': lists})
 
+# Create todo
 @app.route('/todos/create', methods=['POST'])
 def create_todo():
     body, err = None, None
@@ -64,11 +66,11 @@ def create_todo():
     else:
         return jsonify(body)
 
-@app.route('/todos/update/status', methods=['POST'])
-def method_name():
+# Update todo status
+@app.route('/todos/<id>/update/status', methods=['POST'])
+def method_name(id):
     err, body = None, None
     try:
-        id = json.loads(request.data).get('id')
         todo = Todo.query.get(id)
         todo.completed = not todo.completed
         db.session.commit()
