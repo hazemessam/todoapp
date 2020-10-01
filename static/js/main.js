@@ -73,9 +73,30 @@ const updateTodoStatusHandler = async (e) => {
     }
 }
 
+const deleteTodoHandler = async (e) => {
+    const todo = e.target.parentElement.parentElement;
+    const options = {method: 'POST'};
+    try {
+        const res = await fetch(`/todos/${todo.id}/delete`, options);
+        const data = await res.json();
+        if (data.deleted) {
+            todo.remove();
+            console.log(`${data.id} was deleted!`);
+        } else {
+            console.log(`todo wasn't deleted`);
+        }
+    }
+    catch (err) {
+        return console.log(err);
+    }
+
+}
+
 const updateTodoHandler = (e) => {
     if (e.target.classList.contains('checkbox'))
         updateTodoStatusHandler(e);
+    else if (e.target.classList.contains('delete'))
+        deleteTodoHandler(e);
 }
 
 

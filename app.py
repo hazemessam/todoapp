@@ -55,9 +55,9 @@ def create_todo():
             'description': todo.description
         }
     except Exception as e:
+        print(e)
         err = True
         db.session.rollback()
-        print(f'Error: {e}')
     finally:
         db.session.close()
 
@@ -68,7 +68,7 @@ def create_todo():
 
 # Update todo status
 @app.route('/todos/<id>/update/status', methods=['POST'])
-def method_name(id):
+def update_todo_status(id):
     err, body = None, None
     try:
         todo = Todo.query.get(id)
@@ -79,14 +79,38 @@ def method_name(id):
             'updated': True
         }
     except Exception as e:
+        print(e)
         err = True
         db.session.rollback()
-        print(e)
     finally:
         db.session.close()
 
     if err:
         return abort(500)
+    else:
+        return jsonify(body)
+
+# Delete todo
+@app.route('/todos/<id>/delete', methods=['POST'])
+def delete_todo(id):
+    err, body = None, None
+    try:
+        todo = Todo.query.get(id)
+        db.session.delete(todo)
+        db.session.commit()
+        body = {
+            'id': todo.id,
+            'deleted': True
+        }
+    except Exception as e:
+        print(e)
+        err = True
+        db.session.rollback()
+    finally:
+        db.session.close()
+
+    if err:
+        abort(500)
     else:
         return jsonify(body)
 
