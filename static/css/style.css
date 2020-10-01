@@ -1,4 +1,7 @@
-:root {--main-color: #1398F9;}
+:root {
+    --main-color: #1398F9;
+    --success-color: #4CAF50;
+}
 
 body {
     font-family: Arial, Helvetica, sans-serif;
@@ -76,8 +79,8 @@ input {
 input[type="submit"] {
     width: 72px;
     margin-left: 15px;
-    background-color: #4CAF50;
-    border: 2px solid #4CAF50;
+    background-color: var(--success-color);
+    border: 2px solid var(--success-color);
     color: #fff;
     cursor: pointer;
     transition: .3s;
@@ -85,7 +88,7 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: transparent;
-    color: #4CAF50;
+    color: var(--success-color);
 }
 
 .todos {
@@ -123,7 +126,7 @@ input[type="submit"]:hover {
 }
 
 .todo:hover {
-    box-shadow: 0 1px 10px #aaa;
+    box-shadow: 0 1px 7px var(--success-color);
 }
 
 .todo .checkbox {
@@ -131,11 +134,11 @@ input[type="submit"]:hover {
 }
 
 .todo.completed {
-    box-shadow: 0 1px 3px #4CAF50;
+    box-shadow: 0 1px 3px var(--success-color);
 }
 
 .todo.completed .checkbox {
-    color: #4CAF50;
+    color: var(--success-color);
 }
 .todo.completed .description {
     text-decoration: line-through;
