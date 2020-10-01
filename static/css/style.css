@@ -129,8 +129,12 @@ input[type="submit"]:hover {
     box-shadow: 0 1px 7px var(--success-color);
 }
 
-.todo .checkbox {
+.todo i {
     cursor: pointer;
+}
+
+.todo .todo-control {
+    float: right;
 }
 
 .todo.completed {
