@@ -38,6 +38,10 @@ const createTodoHandler = async (e) => {
         todoLi.innerHTML = `
                 <i class="checkbox icon-check-1"></i>
                 <span class="description">${data.description}</span>
+                <span class="todo-control">
+                    <i class="edit icon-edit"></i>
+                    <i class="delete icon-cancel-outline"></i>
+                </span>
             `;
         todosList.appendChild(todoLi);
         createForm.querySelector('input[name="description"]').value = '';
