@@ -1,6 +1,7 @@
 // Global Variables ---------------------------------------------------------//
 const createForm = document.querySelector('.create-form');
-const todosList = document.querySelector('.todos');
+const todosUl = document.querySelector('.todos');
+const todoListsUl = document.querySelector('.lists');
 
 
 // Functions ----------------------------------------------------------------//
@@ -10,7 +11,7 @@ const orderTodos = () => {
     for (let todo of todos) {
         if (todo.classList.contains('completed')) {
             todo.remove();
-            todosList.appendChild(todo);
+            todosUl.appendChild(todo);
         }
     }
 }
@@ -25,16 +26,17 @@ const createTodoHandler = async (e) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            todolist_id: todosUl.id,
             description: createForm.querySelector('input[name="description"]').value
         })
     }
     try {
-        const res = await fetch('http://127.0.0.1:5000/todos/create', options);
+        const res = await fetch(`/todos/create`, options);
         const data = await res.json();
         console.log(data);
         const todoLi = document.createElement('li');
         todoLi.className = 'todo';
-        todoLi.id = data.id;
+        todoLi.id = data.todo_id;
         todoLi.innerHTML = `
                 <i class="checkbox icon-check-1"></i>
                 <span class="description">${data.description}</span>
@@ -43,7 +45,7 @@ const createTodoHandler = async (e) => {
                     <i class="delete icon-cancel-outline"></i>
                 </span>
             `;
-        todosList.appendChild(todoLi);
+        todosUl.appendChild(todoLi);
         createForm.querySelector('input[name="description"]').value = '';
         orderTodos();
     } catch (err) {
@@ -55,7 +57,7 @@ const updateTodoStatusHandler = async (e) => {
     const todo = e.target.parentElement;
     const options = {method: 'POST'};
     try {
-        const res = await fetch(`http://127.0.0.1:5000/todos/${todo.id}/update/status`, options);
+        const res = await fetch(`/todos/${todo.id}/update/status`, options);
         const data = await res.json();
         console.log(data);
         if (data.updated) {
@@ -103,11 +105,20 @@ const updateTodoHandler = (e) => {
         deleteTodoHandler(e);
 }
 
+const selectTodoListHandler = (e) => {
+    location.replace(`/todolists/${e.target.id}`);
+}
+
+const todolistsHandler = (e) => {
+    if (e.target.classList.contains('list'))
+        selectTodoListHandler(e);
+}
+
 
 // Event Listeners ----------------------------------------------------------//
 createForm.addEventListener('submit', createTodoHandler);
-todosList.addEventListener('click', updateTodoHandler);
-
+todosUl.addEventListener('click', updateTodoHandler);
+todoListsUl.addEventListener('click', todolistsHandler);
 
 // Main ---------------------------------------------------------------------//
 orderTodos();

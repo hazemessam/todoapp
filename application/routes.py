@@ -1,5 +1,5 @@
 from application import app, db
-from application.models import Todo, lists
+from application.models import Todo, TodoList, lists
 from flask import render_template, request, redirect, abort, jsonify
 import json
 
@@ -7,14 +7,20 @@ import json
 
 @app.route('/')
 def index():
-    return redirect('/todos')
+    todolist = TodoList.query.order_by(TodoList.id).first()
+    return redirect(f'/todolists/{todolist.id}')
 
 
 # Read all todos
-@app.route('/todos')
-def get_todos():
-    todos = Todo.query.order_by(Todo.id).all()
-    return render_template('todos.html', data={'todos': todos, 'lists': lists})
+@app.route('/todolists/<id>')
+def get_todos(id):
+    todolists = TodoList.query.order_by(TodoList.id).all()
+    todos = Todo.query.filter(Todo.todolist_id == id).order_by(Todo.id).all()
+    return render_template('todos.html', data={
+        'todos': todos, 
+        'todolists': todolists,
+        'selected_id': int(id)
+    })
 
 
 # Create todo
@@ -22,13 +28,16 @@ def get_todos():
 def create_todo():
     body, err = None, None
     try:
-        description = json.loads(request.data).get('description')
+        data = json.loads(request.data)
+        description = data.get('description')
+        todolist_id = data.get('todolist_id')
         if len(description) == 0: description = 'Empty Task'
-        todo = Todo(description=description)
+        todo = Todo(description=description, todolist_id=todolist_id)
         db.session.add(todo)
         db.session.commit()
         body = {
-            'id': todo.id,
+            'todolist_id': todo.todolist_id,
+            'todo_id': todo.id,
             'description': todo.description
         }
     except Exception as e:

@@ -22,8 +22,8 @@
                 <div class="left-panel">
                     <!-- Lists -->
                     <ul class="lists">
-                        {% for list in data.lists %}
-                        <li class="list {{ 'selected' if list.selected else ''}}">{{ list.name }}</li>
+                        {% for todolist in data.todolists %}
+                        <li class="list {{ 'selected' if todolist.id == data.selected_id else ''}}" id="{{ todolist.id }}">{{ todolist.name }}</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
                     <hr>
 
                     <!-- todos -->
-                    <ul class="todos">
+                    <ul class="todos" id="{{ data.selected_id }}">
                         {% for todo in data.todos %}
                         <li class="todo {{ 'completed' if todo.completed }}" id="{{ todo.id }}"> 
                             <i class="checkbox {{ 'icon-check-2' if todo.completed else 'icon-check-1' }}"></i>
