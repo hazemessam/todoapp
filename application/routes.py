@@ -1,5 +1,5 @@
 from application import app, db
-from application.models import Todo, TodoList, lists
+from application.models import Todo, TodoList
 from flask import render_template, request, redirect, abort, jsonify
 import json
 
@@ -11,7 +11,7 @@ def index():
     return redirect(f'/todolists/{todolist.id}')
 
 
-# Read all todos
+# Read todos of a todolist
 @app.route('/todolists/<id>')
 def get_todos(id):
     todolists = TodoList.query.order_by(TodoList.id).all()

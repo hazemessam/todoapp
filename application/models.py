@@ -20,10 +20,3 @@ class TodoList(db.Model):
 
     def __repr__(self):
         return f'<TodoList {self.id} {self.name}>'
-
-
-lists = [
-    {'name': 'list 1', 'selected': True},
-    {'name': 'list 2', 'selected': False},
-    {'name': 'list 3', 'selected': False}
-]
